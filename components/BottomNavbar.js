@@ -1,30 +1,35 @@
 // components/BottomNavbar.js
 import { useState } from "react";
 import { useRouter } from "next/router";
+import React from "react";
+
+// NavButtons definidos fuera del componente
+const navButtons = [
+  { icon: "/icons/home.png", name: "Inicio", url: "/" },
+  { icon: "/icons/books.png", name: "Libros", url: "/libros" },
+  { icon: "/icons/events.png", name: "Eventos", url: "/eventos" },
+  { icon: "/icons/music.png", name: "Musica", url: "/musica" },
+  { icon: "/icons/users.png", name: "Usuarios", url: "/usuarios" },
+  { icon: "/icons/discord.png", name: "Discord", url: "https://discord.gg/BCrvMHxQRW" },
+];
 
 const BottomNavbar = ({ userProfile, handleSignOut }) => {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const navButtons = [
-    { icon: "/icons/home.png", name: "Inicio", url: '/' },
-    { icon: "/icons/books.png", name: "Libros", url: '/libros' },
-    { icon: "/icons/events.png", name: "Eventos", url: '/eventos' },
-    { icon: "/icons/music.png", name: "Musica", url: '/musica' },
-    { icon: "/icons/users.png", name: "Usuarios", url: '/usuarios' },
-    { icon: "/icons/discord.png", name: "Discord", url: 'https://discord.gg/BCrvMHxQRW' }
-  ];
-
   return (
-    <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2 flex items-center bg-gray-900 p-2 rounded-full shadow-lg space-x-4 w-max z-50">
-      <img src="/icons/icon.png" alt="Logo" className="h-13 w-auto" />
+    <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2 flex items-center bg-gray-900 p-2 rounded-full w-max z-50">
+      {/* Logo optimizado */}
+      <img src="/icons/icon.png" alt="Logo" className="h-13 w-auto" loading="lazy" />
+
+      {/* Botones de navegación */}
       {navButtons.map((button, index) => (
         <div key={index} className="relative group">
           <button
             onClick={() => router.push(button.url)}
-            className="p-2 rounded-full bg-gray-800 text-white text-xl transition-transform transform group-hover:scale-110"
+            className="p-2 rounded-full bg-gray-800 text-white text-xl transition-transform"
           >
-            <img src={button.icon} alt={button.name} className="w-8 h-8" />
+            <img src={button.icon} alt={button.name} className="w-8 h-8" loading="lazy" />
           </button>
           <span className="absolute bottom-14 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gray-700 text-white text-xs rounded px-2 py-1 transition-opacity">
             {button.name}
@@ -32,16 +37,18 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
         </div>
       ))}
 
+      {/* Dropdown del usuario */}
       {userProfile && (
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="p-2 rounded-full bg-gray-800 text-white text-xl hover:scale-110 transition-transform"
+            className="p-2 rounded-full bg-gray-800 text-white text-xl transition-transform"
           >
             <img
-              src={userProfile.avatar_url || 'https://i.ibb.co/d0mWy0kP/perfildef.png'}
+              src={userProfile.avatar_url || "/icons/default-avatar.png"}
               alt="Avatar"
               className="w-8 h-8 rounded-full"
+              loading="lazy"
             />
           </button>
           {isDropdownOpen && (
@@ -72,4 +79,5 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
   );
 };
 
-export default BottomNavbar;
+// Memoizamos el componente para evitar renders innecesarios
+export default React.memo(BottomNavbar);
