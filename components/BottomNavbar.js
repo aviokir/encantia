@@ -5,12 +5,12 @@ import React from "react";
 
 // NavButtons definidos fuera del componente
 const navButtons = [
-  { icon: "/icons/home.png", name: "Inicio", url: "/" },
-  { icon: "/icons/books.png", name: "Libros", url: "/libros" },
-  { icon: "/icons/events.png", name: "Eventos", url: "/eventos" },
-  { icon: "/icons/music.png", name: "Musica", url: "/musica" },
-  { icon: "/icons/users.png", name: "Usuarios", url: "/usuarios" },
-  { icon: "/icons/discord.png", name: "Discord", url: "https://discord.gg/BCrvMHxQRW" },
+  { icon: "/icons/home.webp", name: "Inicio", url: "/" },
+  { icon: "/icons/books.webp", name: "Libros", url: "/libros" },
+  { icon: "/icons/events.webp", name: "Eventos", url: "/eventos" },
+  { icon: "/icons/music.webp", name: "Musica", url: "/musica" },
+  { icon: "/icons/users.webp", name: "Usuarios", url: "/usuarios" },
+  { icon: "/icons/discord.webp", name: "Discord", url: "https://discord.gg/BCrvMHxQRW" },
 ];
 
 const BottomNavbar = ({ userProfile, handleSignOut }) => {
@@ -81,3 +81,4 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
 
 // Memoizamos el componente para evitar renders innecesarios
 export default React.memo(BottomNavbar);
+
