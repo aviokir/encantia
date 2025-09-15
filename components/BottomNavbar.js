@@ -5,12 +5,12 @@ import React from "react";
 
 // NavButtons definidos fuera del componente
 const navButtons = [
-  { icon: "/icons/home.webp", name: "Inicio", url: "/" },
-  { icon: "/icons/books.webp", name: "Libros", url: "/libros" },
-  { icon: "/icons/events.webp", name: "Eventos", url: "/eventos" },
-  { icon: "/icons/music.webp", name: "Musica", url: "/musica" },
-  { icon: "/icons/users.webp", name: "Usuarios", url: "/usuarios" },
-  { icon: "/icons/discord.webp", name: "Discord", url: "https://discord.gg/BCrvMHxQRW" },
+  { icon: "https://encantia.online/icons/home.webp", name: "Inicio", url: "/" },
+  { icon: "https://encantia.online/icons/books.webp", name: "Libros", url: "/libros" },
+  { icon: "https://encantia.online/icons/events.webp", name: "Eventos", url: "/eventos" },
+  { icon: "https://encantia.online/icons/music.webp", name: "Musica", url: "/musica" },
+  { icon: "https://encantia.online/icons/users.webp", name: "Usuarios", url: "/usuarios" },
+  { icon: "https://encantia.online/icons/discord.webp", name: "Discord", url: "https://discord.gg/BCrvMHxQRW" },
 ];
 
 const BottomNavbar = ({ userProfile, handleSignOut }) => {
@@ -20,7 +20,7 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
   return (
     <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2 flex items-center bg-gray-900 p-2 rounded-full w-max z-50">
       {/* Logo optimizado */}
-      <img src="/icons/icon.png" alt="Logo" className="h-13 w-auto" loading="lazy" />
+      <img src="https://encantia.online/icons/icon.png" alt="Logo" className="h-13 w-auto" loading="lazy" />
 
       {/* Botones de navegación */}
       {navButtons.map((button, index) => (
@@ -81,4 +81,5 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
 
 // Memoizamos el componente para evitar renders innecesarios
 export default React.memo(BottomNavbar);
+
 
