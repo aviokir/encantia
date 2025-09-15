@@ -1,49 +1,52 @@
-import Head from "next/head";
-import Auth from "../components/Auth";
-import UserArea from "../components/UserArea";
-import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabaseClient";
+// pages/_app.js
+import '../styles/globals.css';
+import BottomNavbar from '../components/BottomNavbar';
+import { useState, useEffect } from 'react';
+import { supabase } from '../utils/supabaseClient';
 
-export default function Home() {
-  // Usamos `useState` correctamente para manejar el estado de la sesión
-  const [session, setSession] = useState(null);
+function MyApp({ Component, pageProps }) {
+  const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
-    // Establecer la sesión inicial
-    const fetchSession = async () => {
-      const { data: sessionData } = await supabase.auth.getSession(); // Cambié a `getSession`
-      setSession(sessionData);
+    const fetchProfile = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      if (sessionData?.session?.user) {
+        const user = sessionData.session.user;
+        const { data } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+        setUserProfile(data);
+      }
     };
 
-    fetchSession(); // Llamamos la función para obtener la sesión
+    fetchProfile();
 
-    // Suscripción a cambios de estado de autenticación
-    const { data: authListener, error } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
-      setSession(session);
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        setUserProfile(session.user); // Puedes ajustar si quieres obtener más datos del perfil
+      } else {
+        setUserProfile(null);
+      }
     });
 
-    // Comprobamos si el listener fue correctamente asignado
-    if (authListener && typeof authListener.unsubscribe === 'function') {
-      // Limpiar la suscripción cuando el componente se desmonte
-      return () => {
+    return () => {
+      if (authListener && typeof authListener.unsubscribe === 'function') {
         authListener.unsubscribe();
-      };
-    } else {
-      console.error('Error: El listener de autenticación no tiene unsubscribe.');
-    }
-
+      }
+    };
   }, []);
 
   return (
-    <div className={styles.container}> {/* Usamos el CSS Module aquí */}
-      <Head>
-        <title>Encantia</title>
-        <meta name="description" content="Web oficial de Encantia" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {session ? <UserArea /> : <Auth />}
-    </div>
+    <>
+      <Component {...pageProps} />
+      <BottomNavbar userProfile={userProfile} handleSignOut={async () => {
+        await supabase.auth.signOut();
+        setUserProfile(null);
+      }} />
+    </>
   );
 }
+
+export default MyApp;
