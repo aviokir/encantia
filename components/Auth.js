@@ -66,7 +66,7 @@ export default function Auth() {
       <div className="max-w-sm w-full border border-gray-700 rounded p-6 bg-gray-800">
         <div className="flex justify-center mb-4">
           <img
-            src="/icons/icon.png"
+            src="/icons/icon.webp"
             alt="Logo de Encatia"
             className="h-25"
           />
@@ -86,7 +86,7 @@ export default function Auth() {
               value={email}
               placeholder="Correo electrónico"
             />
-            <img src="/icons/email.png" alt="Correo" className="w-6 h-6 ml-2" />
+            <img src="/icons/email.webp" alt="Correo" className="w-6 h-6 ml-2" />
           </div>
         </div>
 
@@ -100,14 +100,14 @@ export default function Auth() {
               value={password}
               placeholder="Contraseña"
             />
-            <img src="/icons/password.png" alt="Contraseña" className="w-6 h-6 ml-2" />
+            <img src="/icons/password.webp" alt="Contraseña" className="w-6 h-6 ml-2" />
             <button
               type="button"
               className="ml-2 text-white"
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
               <img
-                src={passwordVisible ? "/icons/upass.png" : "/icons/vpass.png"}
+                src={passwordVisible ? "/icons/upass.webp" : "/icons/vpass.webp"}
                 alt={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
                 className="w-6 h-6"
               />
@@ -122,7 +122,7 @@ export default function Auth() {
         >
           {loading ? (
             <img
-              src="/icons/loading.gif"
+              src="/icons/loading.webp"
               alt="Cargando..."
               className="w-6 h-6"
             />
@@ -140,14 +140,14 @@ export default function Auth() {
               <img
                 src={
                   provider === 'github'
-                    ? "/icons/github.png"
+                    ? "/icons/github.webp"
                     : provider === 'discord'
-                    ? "/icons/discord.png"
+                    ? "/icons/discord.webp"
                     : provider === 'gitlab'
-                    ? "/icons/gitlab.png"
+                    ? "/icons/gitlab.webp"
                     : provider === 'google'
-                    ? "/icons/google.png"
-                    : "/icons/spotify.png"
+                    ? "/icons/google.webp"
+                    : "/icons/spotify.webp"
                 }
                 alt={provider}
                 className="w-8 h-8"
