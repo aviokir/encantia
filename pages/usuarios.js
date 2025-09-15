@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../utils/supabaseClient";
-import BottomNavbar from "../components/BottomNavbar"; // <- Importamos el componente
 
 export default function Profiles() {
   const [userProfile, setUserProfile] = useState(null);
@@ -113,9 +112,6 @@ export default function Profiles() {
         ))}
       </div>
 
-      {/* Navbar reutilizable */}
-      <BottomNavbar userProfile={userProfile} handleSignOut={handleSignOut} />
-
       {/* Footer */}
       <div className="fixed bottom-3 right-3 text-gray-400 text-xs bg-gray-900 p-2 rounded-md shadow-md z-40">
         © 2025 by Encantia is licensed under CC BY-NC-ND 4.0.
@@ -123,3 +119,4 @@ export default function Profiles() {
     </div>
   );
 }
+
