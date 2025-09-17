@@ -20,7 +20,7 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
   return (
     <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2 flex items-center bg-gray-900 p-2 rounded-full w-max z-50">
       {/* Logo optimizado */}
-      <img src="https://encantia.online/icons/icon.png" alt="Logo" className="h-13 w-auto" loading="lazy" />
+      <img src="https://encantia.online/icons/icon.webp" alt="Logo" className="h-13 w-auto" loading="lazy" />
 
       {/* Botones de navegación */}
       {navButtons.map((button, index) => (
@@ -81,5 +81,6 @@ const BottomNavbar = ({ userProfile, handleSignOut }) => {
 
 // Memoizamos el componente para evitar renders innecesarios
 export default React.memo(BottomNavbar);
+
 
 
