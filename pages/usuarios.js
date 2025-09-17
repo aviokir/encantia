@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../utils/supabaseClient";
+import BottomNavbar from "../components/BottomNavbar"; // <- Importamos el componente
 
 export default function Profiles() {
   const [userProfile, setUserProfile] = useState(null);
