@@ -1,22 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../utils/supabaseClient";
-import BottomNavbar from "../components/BottomNavbar"; // <- Navbar inferior
+import BottomNavbar from "../components/BottomNavbar"; // <- Importamos el componente
 
 export default function Profiles() {
   const [userProfile, setUserProfile] = useState(null);
   const [allProfiles, setAllProfiles] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState({});
   const router = useRouter();
-
-  // Helper para obtener avatar con fallback
-  const getAvatarUrl = (path) => {
-    if (!path || path.trim() === "") {
-      return "https://i.ibb.co/d0mWy0kP/perfildef.png"; // fallback
-    }
-    // Generamos la URL pública desde el bucket "avatars"
-    return supabase.storage.from("avatars").getPublicUrl(path).data.publicUrl;
-  };
 
   const fetchUserProfile = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -81,7 +72,7 @@ export default function Profiles() {
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen text-white pb-16">
+    <div className="bg-gray-900 min-h-screen text-white">
       {/* Perfiles agrupados */}
       <div className="p-4 mt-0">
         <h2 className="text-xl font-semibold mb-4">Perfiles de usuarios por rol</h2>
@@ -95,9 +86,9 @@ export default function Profiles() {
                   className="bg-gray-800 rounded-lg p-4 flex items-center space-x-4"
                 >
                   <img
-                    src={getAvatarUrl(profile.avatar_url)}
+                    src={profile.avatar_url || "https://i.ibb.co/d0mWy0kP/perfildef.png"}
                     alt={profile.name}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="w-12 h-12 rounded-full"
                   />
                   <div className="flex-1">
                     <p className="font-medium">{profile.name}</p>
@@ -122,13 +113,13 @@ export default function Profiles() {
         ))}
       </div>
 
+      {/* Navbar reutilizable */}
+      <BottomNavbar userProfile={userProfile} handleSignOut={handleSignOut} />
+
       {/* Footer */}
       <div className="fixed bottom-3 right-3 text-gray-400 text-xs bg-gray-900 p-2 rounded-md shadow-md z-40">
         © 2025 by Encantia is licensed under CC BY-NC-ND 4.0.
       </div>
-
-      {/* Navbar inferior */}
-      <BottomNavbar />
     </div>
   );
 }
