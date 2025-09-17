@@ -117,6 +117,8 @@ export default function Profiles() {
       <div className="fixed bottom-3 right-3 text-gray-400 text-xs bg-gray-900 p-2 rounded-md shadow-md z-40">
         © 2025 by Encantia is licensed under CC BY-NC-ND 4.0.
       </div>
+
+      <BottomNavbar />
     </div>
   );
 }
