@@ -11,7 +11,7 @@ export default function Custom500() {
       </Head>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 px-6 text-center transition-colors duration-300">
         <motion.img
-          src="https://images.encantia.lat/encantia-logo-2025.webp"
+          src="https://www.encantia.online/icons/icon.webp"
           alt="Encantia Logo"
           className="w-40 mb-8"
           initial={{ opacity: 0, y: -20 }}
