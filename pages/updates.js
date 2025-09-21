@@ -81,6 +81,12 @@ export default function Navbar() {
             {status}
           </span>
         );
+      case "Cancelado":
+        return (
+          <span className="px-2 py-1 rounded text-red-800 bg-yellow-100 text-xs font-semibold">
+            {status}
+          </span>
+        );
       case "Pendiente":
         return (
           <span className="px-2 py-1 rounded text-orange-800 bg-orange-100 text-xs font-semibold">
