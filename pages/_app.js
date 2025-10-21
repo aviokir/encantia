@@ -8,59 +8,59 @@ export default function App({ Component, pageProps }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // 🔍 Obtener el estado actual de mantenimiento
-  async function checkMaintenance() {
-    try {
-      const { data, error } = await supabase
-        .from("settings")
-        .select("maintenance, message")
-        .eq("id", 1)
-        .single();
+  // 📦 Leer el estado actual
+  async function fetchMaintenance() {
+    const { data, error } = await supabase
+      .from("settings")
+      .select("maintenance, message")
+      .eq("id", 1)
+      .single();
 
-      if (error || !data) {
-        console.warn("No se encontró configuración de mantenimiento:", error);
-        return { maintenance: false, message: "" };
-      }
-
-      return data;
-    } catch (err) {
-      console.error("Error en checkMaintenance:", err);
+    if (error) {
+      console.error("Error al obtener mantenimiento:", error);
       return { maintenance: false, message: "" };
     }
+
+    return data || { maintenance: false, message: "" };
   }
 
   useEffect(() => {
+    let mounted = true;
+
     async function init() {
-      const maintenanceData = await checkMaintenance();
-      setMaintenance(maintenanceData.maintenance || false);
-      setMessage(maintenanceData.message || "");
+      const data = await fetchMaintenance();
+      if (!mounted) return;
+      setMaintenance(data.maintenance);
+      setMessage(data.message);
       setLoading(false);
     }
 
     init();
 
-    // 🔁 Suscripción en tiempo real a cambios de la tabla settings
+    // ⚡ Suscripción realtime
     const channel = supabase
-      .channel("settings-realtime")
+      .channel("realtime:settings:id=eq.1")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "settings", filter: "id=eq.1" },
+        { event: "UPDATE", schema: "public", table: "settings", filter: "id=eq.1" },
         (payload) => {
-          const data = payload.new;
-          if (data) {
-            setMaintenance(data.maintenance);
-            setMessage(data.message || "");
-          }
+          const newData = payload.new;
+          console.log("🔄 Cambio detectado:", newData);
+          setMaintenance(newData.maintenance);
+          setMessage(newData.message);
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("📡 Estado de canal:", status);
+      });
 
     return () => {
+      mounted = false;
       supabase.removeChannel(channel);
     };
   }, []);
 
-  // ⏳ Estado de carga inicial
+  // ⏳ Mientras carga la primera lectura
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -69,32 +69,19 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  // 🚧 Modo mantenimiento (sin CSS externo)
+  // 🚧 Si está activo el mantenimiento
   if (maintenance) {
     return (
-      <>
-        <Script
-          src="https://web.cmp.usercentrics.eu/modules/autoblocker.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="usercentrics-cmp"
-          src="https://web.cmp.usercentrics.eu/ui/loader.js"
-          data-settings-id="E0yLicy4fkb4pH"
-          strategy="afterInteractive"
-        />
-
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-          <div className="bg-white p-8 rounded-xl shadow-md text-center max-w-md mx-auto">
-            <h1 className="text-2xl font-bold mb-4">🚧 Mantenimiento 🚧</h1>
-            <p className="text-gray-700">{message}</p>
-          </div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-xl shadow text-center">
+          <h1 className="text-2xl font-bold mb-4">🚧 En mantenimiento 🚧</h1>
+          <p className="text-gray-700">{message}</p>
         </div>
-      </>
+      </div>
     );
   }
 
-  // ✅ Modo normal (por ejemplo, UserArea.js)
+  // ✅ Página normal
   return (
     <>
       <Script
@@ -107,7 +94,6 @@ export default function App({ Component, pageProps }) {
         data-settings-id="E0yLicy4fkb4pH"
         strategy="afterInteractive"
       />
-
       <Component {...pageProps} />
     </>
   );
