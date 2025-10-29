@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 import "../styles/globals.css";
 import { supabase } from "../utils/supabaseClient";
+import Layout from "../components/Layout";
 
 export default function App({ Component, pageProps }) {
   const [maintenance, setMaintenance] = useState(false);
@@ -94,7 +95,9 @@ export default function App({ Component, pageProps }) {
         data-settings-id="E0yLicy4fkb4pH"
         strategy="afterInteractive"
       />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }
