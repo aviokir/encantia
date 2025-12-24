@@ -4,6 +4,7 @@ import { supabase } from "../../lib/supabase";
 import Navbar from "../../components/Navbar";
 import { PencilIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Footer from "../../components/Footer";
+import AlertBanner from "../../components/AlertBanner"; // Importa el componente
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -123,6 +124,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center">
+      <AlertBanner /> {/* Banner de avisos */}
       <Navbar />
 
       <div className="mt-12 w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 flex flex-col items-center">
