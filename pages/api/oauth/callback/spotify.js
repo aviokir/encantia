@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export default async function handler(req, res) {
   const code = req.query.code;
   const redirectUri = `${process.env.NEXT_PUBLIC_URL}/api/oauth/callback/spotify`;
@@ -25,3 +23,4 @@ export default async function handler(req, res) {
   console.log(data); // Aquí verás access_token y refresh_token
   res.send("Autenticación completada, puedes cerrar esta ventana");
 }
+
