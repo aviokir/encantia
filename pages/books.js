@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AlertBanner from "../components/AlertBanner"; // Importa el componente
 
 export default function Books() {
   const [books, setBooks] = useState([]);
@@ -33,6 +34,7 @@ export default function Books() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+      <AlertBanner /> {/* Banner de avisos */}
       <Navbar />
 
       <main className="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
