@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { supabase } from "../lib/supabase";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AlertBanner from "../components/AlertBanner"; // Importa el componente
 
 export default function Home() {
   const [userName, setUserName] = useState(""); // nombre del usuario
@@ -44,6 +45,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+      <AlertBanner /> {/* Banner de avisos */}
       <Navbar />
 
       {userName && (
