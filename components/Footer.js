@@ -18,7 +18,7 @@ export default function Footer() {
           <h3 className="text-white font-bold mb-4">Empleo</h3>
           <ul className="space-y-2">
             <li>
-              <a href="https://careers.encantia.online/" className="hover:text-white transition">Trabaja con Nosotros</a>
+              <a href="https://jobs.encantia.online/" className="hover:text-white transition">Trabaja con Nosotros</a>
             </li>
           </ul>
         </div>
@@ -47,3 +47,4 @@ export default function Footer() {
     </footer>
   );
 }
+
