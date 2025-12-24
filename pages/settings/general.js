@@ -4,6 +4,7 @@ import { supabase } from "../../lib/supabase";
 import Navbar from "../../components/Navbar";
 import ConnectionSpotify from "../../components/ConnectionSpotify"; // componente de ejemplo
 import Footer from "../../components/Footer";
+import AlertBanner from "../../components/AlertBanner"; // Importa el componente
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -118,6 +119,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+      <AlertBanner /> {/* Banner de avisos */}
       <Navbar />
       <div className="mt-12 flex w-full max-w-5xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl shadow-lg">
         {/* Sidebar */}
