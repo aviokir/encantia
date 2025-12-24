@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "../lib/supabase";
+import AlertBanner from "../components/AlertBanner"; // Importa el componente
 
 export default function Auth() {
   const router = useRouter();
@@ -8,20 +9,16 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState("login"); // login | register
+  const [mode, setMode] = useState("login");
   const [errorMsg, setErrorMsg] = useState("");
   const [alreadyLoggedIn, setAlreadyLoggedIn] = useState(false);
 
-  // Verifica si hay sesión activa
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) {
-        setAlreadyLoggedIn(true);
-      }
+      if (data.session) setAlreadyLoggedIn(true);
     });
   }, []);
 
-  // Maneja login o registro
   const handleSubmit = async () => {
     setLoading(true);
     setErrorMsg("");
@@ -46,9 +43,7 @@ export default function Auth() {
     if (session) {
       router.push("/home");
     } else if (mode === "register") {
-      setErrorMsg(
-        "Registro exitoso. Revisa tu correo para confirmar tu cuenta."
-      );
+      setErrorMsg("Registro exitoso. Revisa tu correo para confirmar tu cuenta.");
     } else {
       setErrorMsg("No se pudo iniciar sesión. Revisa tu email y contraseña.");
     }
@@ -63,8 +58,9 @@ export default function Auth() {
 
   if (alreadyLoggedIn) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-950 px-4">
-        <div className="w-full max-w-sm bg-neutral-900 rounded-2xl p-8 shadow-xl text-center">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-950 px-4">
+        <AlertBanner /> {/* Banner de avisos */}
+        <div className="w-full max-w-sm bg-neutral-900 rounded-2xl p-8 shadow-xl text-center mt-4">
           <h1 className="text-2xl font-bold text-white mb-2">Ya estás logueado</h1>
           <p className="text-neutral-400 mb-6">Serás redirigido a Home.</p>
           <button
@@ -79,18 +75,15 @@ export default function Auth() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 px-4">
-      <div className="w-full max-w-sm bg-neutral-900 rounded-2xl p-8 shadow-xl">
-        {/* Título */}
-        <h1 className="text-2xl font-bold text-white text-center mb-2">
-          Bienvenido
-        </h1>
-
+    <div className="min-h-screen flex flex-col items-center justify-center bg-neutral-950 px-4">
+      <AlertBanner /> {/* Banner de avisos */}
+      <div className="w-full max-w-sm bg-neutral-900 rounded-2xl p-8 shadow-xl mt-4">
+        {/* Título y formulario */}
+        <h1 className="text-2xl font-bold text-white text-center mb-2">Bienvenido</h1>
         <h2 className="text-lg text-neutral-400 text-center mb-6">
           {mode === "login" ? "Inicia sesión" : "Regístrate"}
         </h2>
 
-        {/* Formulario */}
         <div className="space-y-3">
           <input
             type="email"
@@ -115,10 +108,8 @@ export default function Auth() {
             </button>
           </div>
 
-          {/* Error */}
           {errorMsg && <p className="text-red-500 text-sm mt-1">{errorMsg}</p>}
 
-          {/* Botón principal */}
           <button
             onClick={handleSubmit}
             disabled={loading}
@@ -127,7 +118,6 @@ export default function Auth() {
             {mode === "login" ? "Iniciar sesión" : "Registrarse"}
           </button>
 
-          {/* Toggle login/registro */}
           <button
             onClick={() => setMode(mode === "login" ? "register" : "login")}
             className="w-full text-sm text-neutral-400 hover:text-white transition"
@@ -138,14 +128,12 @@ export default function Auth() {
           </button>
         </div>
 
-        {/* Divider */}
         <div className="my-6 flex items-center gap-3">
           <div className="h-px w-full bg-neutral-700" />
           <span className="text-xs text-neutral-500">O</span>
           <div className="h-px w-full bg-neutral-700" />
         </div>
 
-        {/* OAuth */}
         <div className="space-y-2">
           <OAuthButton onClick={() => signInWithProvider("google")}>
             Continuar con Google
