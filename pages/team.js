@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import Footer from "../components/Footer";
+import AlertBanner from "../components/AlertBanner"; // Importa el componente
 
 export default function Team() {
   const [team, setTeam] = useState([]);
@@ -40,6 +41,7 @@ export default function Team() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col">
+      <AlertBanner /> {/* Banner de avisos */}
       <Navbar />
 
       <main className="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
