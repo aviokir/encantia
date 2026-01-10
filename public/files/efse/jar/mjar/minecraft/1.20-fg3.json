@@ -2,36 +2,26 @@
   "id": "1.20-fg3",
   "inheritsFrom": "1.20",
   "type": "release",
-  "mainClass": "net.minecraft.client.main.Main",
+  "mainClass": "net.fabricmc.loader.launch.knot.KnotClient",
   "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --clientId ${clientid} --xuid ${auth_xuid} --userType ${user_type} --versionType ${version_type}",
   "libraries": [
     {
-      "name": "com.mojang:patchy:2.2.10",
+      "name": "net.fabricmc:fabric-loader:0.14.24",
       "downloads": {
         "artifact": {
-          "url": "https://libraries.minecraft.net/com/mojang/patchy/2.2.10/patchy-2.2.10.jar",
-          "sha1": "da05971b07cbb379d002cf7eaec6a2048211fefc",
-          "size": 4439
-        }
-      }
-    },
-    {
-      "name": "com.mojang:brigadier:1.1.8",
-      "downloads": {
-        "artifact": {
-          "url": "https://libraries.minecraft.net/com/mojang/brigadier/1.1.8/brigadier-1.1.8.jar",
-          "sha1": "5244ce82c3337bba4a196a3ce858bfaecc74404a",
-          "size": 77121
+          "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.14.24/fabric-loader-0.14.24.jar",
+          "sha1": "9c3c8f1f4b8d3f0f7883a5c03785b9973b8d6b3b",
+          "size": 90554
         }
       }
     }
   ],
   "jar": "1.20-fg3.jar",
   "assetIndex": {
-    "id": "5",
+    "id": "1.20",
     "url": "https://piston-meta.mojang.com/v1/packages/4e39a2d5d49a8e56713f55e2743c97404f05bf2b/5.json"
   },
-  "assets": "5",
+  "assets": "1.20",
   "javaVersion": {
     "component": "java-runtime-gamma",
     "majorVersion": 17
