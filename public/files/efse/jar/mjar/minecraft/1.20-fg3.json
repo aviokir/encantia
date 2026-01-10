@@ -1,10 +1,10 @@
 {
-  "id": "1.20-fg3",         // ID único de tu versión
-  "inheritsFrom": "1.20",   // opcional: si quieres heredar librerías de la versión oficial 1.20
-  "type": "release",        // tipo: release, snapshot, etc.
+  "id": "1.20-fg3",
+  "inheritsFrom": "1.20",
+  "type": "release",
   "mainClass": "net.minecraft.client.main.Main",
   "minecraftArguments": "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --clientId ${clientid} --xuid ${auth_xuid} --userType ${user_type} --versionType ${version_type}",
-  "libraries": [             // Librerías necesarias para correr Minecraft
+  "libraries": [
     {
       "name": "com.mojang:patchy:2.2.10",
       "downloads": {
@@ -25,9 +25,8 @@
         }
       }
     }
-    // ... todas las librerías que necesites
   ],
-  "jar": "1.20-fg3.jar",    // Nombre del JAR que usarás
+  "jar": "1.20-fg3.jar",
   "assetIndex": {
     "id": "5",
     "url": "https://piston-meta.mojang.com/v1/packages/4e39a2d5d49a8e56713f55e2743c97404f05bf2b/5.json"
