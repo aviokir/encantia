@@ -16,6 +16,16 @@
       }
     },
     {
+      "name": "net.fabricmc:access-widener:1.0.0",
+      "downloads": {
+        "artifact": {
+          "url": "https://maven.fabricmc.net/net/fabricmc/access-widener/1.0.0/access-widener-1.0.0.jar",
+          "sha1": "f0b3c2f918d5a2a9b4e1bbdcd69e89284f21b69c",
+          "size": 1024
+        }
+      }
+    },
+    {
       "name": "org.ow2.asm:asm:9.5",
       "downloads": {
         "artifact": {
@@ -26,12 +36,32 @@
       }
     },
     {
-      "name": "net.fabricmc:access-widener:1.0.0",
+      "name": "org.ow2.asm:asm-tree:9.5",
       "downloads": {
         "artifact": {
-          "url": "https://maven.fabricmc.net/net/fabricmc/access-widener/1.0.0/access-widener-1.0.0.jar",
-          "sha1": "f0b3c2f918d5a2a9b4e1bbdcd69e89284f21b69c",
-          "size": 1024
+          "url": "https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/9.5/asm-tree-9.5.jar",
+          "sha1": "0b52b3a2b8b2b5cf87a591f9e1ebef5aa51d21aa",
+          "size": 102776
+        }
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-commons:9.5",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/9.5/asm-commons-9.5.jar",
+          "sha1": "4b7f0e74f3c3e4f28d7a62fdbd6f5bff2d5c4b21",
+          "size": 92312
+        }
+      }
+    },
+    {
+      "name": "org.ow2.asm:asm-util:9.5",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/ow2/asm/asm-util/9.5/asm-util-9.5.jar",
+          "sha1": "5c12a7a8b3c7d8e6f6f5e6d7c8a5b6d7c8e5f6d5",
+          "size": 71244
         }
       }
     }
@@ -47,3 +77,4 @@
     "majorVersion": 17
   }
 }
+
