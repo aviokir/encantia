@@ -14,6 +14,26 @@
           "size": 90554
         }
       }
+    },
+    {
+      "name": "org.ow2.asm:asm:9.5",
+      "downloads": {
+        "artifact": {
+          "url": "https://repo1.maven.org/maven2/org/ow2/asm/asm/9.5/asm-9.5.jar",
+          "sha1": "e0b598fcbd0e707f9d8d67e2d94a0d87ffb81429",
+          "size": 42177
+        }
+      }
+    },
+    {
+      "name": "net.fabricmc:access-widener:1.0.0",
+      "downloads": {
+        "artifact": {
+          "url": "https://maven.fabricmc.net/net/fabricmc/access-widener/1.0.0/access-widener-1.0.0.jar",
+          "sha1": "f0b3c2f918d5a2a9b4e1bbdcd69e89284f21b69c",
+          "size": 1024
+        }
+      }
     }
   ],
   "jar": "1.20-fg3.jar",
