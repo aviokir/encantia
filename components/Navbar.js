@@ -9,6 +9,7 @@ export default function Navbar() {
     { name: "Eventos", path: "/events" },
     { name: "Libros", path: "/books" },
     { name: "Team", path: "/team" },
+    { name: "Tienda", path: "/proximamente" },
   ];
 
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -147,3 +148,4 @@ export default function Navbar() {
     </>
   );
 }
+
