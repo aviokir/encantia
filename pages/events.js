@@ -138,7 +138,7 @@ export default function Events() {
                 )}
 
                 <div className="p-4 flex flex-col flex-1">
-                  {/* STATUS */}
+                  {/* STATUS BADGE */}
                   {status && (
                     <span
                       className={`mb-2 px-3 py-1 rounded-full text-xs font-semibold w-fit ${status.color}`}
@@ -147,38 +147,44 @@ export default function Events() {
                     </span>
                   )}
 
+                  {/* STATUS TEXTO */}
+                  <p className="text-gray-300 mb-2">
+                    Estado: <span className="font-semibold">{status?.label}</span>
+                  </p>
+
                   <h2 className="text-xl font-bold mb-1">{event.name}</h2>
                   <p className="text-gray-400 mb-2">
                     {new Date(event.date).toLocaleString()}
                   </p>
 
-                  {/* TEXTO SEGÚN STATUS */}
-                  {event.status === "confirmado" && timer && (
+                  {/* CONTADOR */}
+                  {isCountdownActive(event.status) && timer && (
                     <p className="text-yellow-400 font-semibold mb-2">
                       ⏳ {timer.days}d {timer.hours}h {timer.minutes}m{" "}
                       {timer.seconds}s
                     </p>
                   )}
 
-                  {event.status === "confirmado" && !timer && (
+                  {isCountdownActive(event.status) && !timer && (
                     <p className="text-green-400 font-semibold mb-2">
                       Evento iniciado / pasado
                     </p>
                   )}
 
-                  {event.status === "suspendido" && (
+                  {/* Mensajes de otros estados */}
+                  {!isCountdownActive(event.status) && event.status === "suspendido" && (
                     <p className="text-red-400 font-semibold mb-2">
                       ⛔ Evento suspendido
                     </p>
                   )}
 
-                  {event.status === "pendiente" && (
+                  {!isCountdownActive(event.status) && event.status === "pendiente" && (
                     <p className="text-yellow-300 font-semibold mb-2">
                       ⏳ Pendiente de validación
                     </p>
                   )}
 
-                  {event.status === "finalizado" && (
+                  {!isCountdownActive(event.status) && event.status === "finalizado" && (
                     <p className="text-gray-400 font-semibold mb-2">
                       ✔ Evento finalizado
                     </p>
@@ -222,7 +228,7 @@ export default function Events() {
                 />
 
                 <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6">
-                  {/* STATUS */}
+                  {/* STATUS BADGE */}
                   {EVENT_STATUS[selectedEvent.status] && (
                     <span
                       className={`mb-2 px-4 py-1 rounded-full text-sm font-semibold w-fit ${
@@ -233,13 +239,19 @@ export default function Events() {
                     </span>
                   )}
 
-                  <h2 className="text-3xl font-bold">
-                    {selectedEvent.name}
-                  </h2>
+                  {/* STATUS TEXTO */}
+                  <p className="text-gray-300 mb-2">
+                    Estado:{" "}
+                    <span className="font-semibold">
+                      {EVENT_STATUS[selectedEvent.status]?.label}
+                    </span>
+                  </p>
+
+                  <h2 className="text-3xl font-bold">{selectedEvent.name}</h2>
                   <p>{new Date(selectedEvent.date).toLocaleString()}</p>
 
-                  {/* STATUS TEXTO */}
-                  {selectedEvent.status === "confirmado" &&
+                  {/* CONTADOR */}
+                  {isCountdownActive(selectedEvent.status) &&
                     timers[selectedEvent.id] && (
                       <p className="text-yellow-400 font-semibold text-lg">
                         ⏳ {timers[selectedEvent.id].days}d{" "}
@@ -249,40 +261,45 @@ export default function Events() {
                       </p>
                     )}
 
-                  {selectedEvent.status === "suspendido" && (
-                    <p className="text-red-400 font-semibold text-lg">
-                      ⛔ Evento suspendido
-                    </p>
-                  )}
+                  {isCountdownActive(selectedEvent.status) &&
+                    !timers[selectedEvent.id] && (
+                      <p className="text-green-400 font-semibold text-lg">
+                        Evento iniciado / pasado
+                      </p>
+                    )}
 
-                  {selectedEvent.status === "pendiente" && (
-                    <p className="text-yellow-300 font-semibold text-lg">
-                      ⏳ Pendiente de validación
-                    </p>
-                  )}
+                  {/* Mensajes de otros estados */}
+                  {!isCountdownActive(selectedEvent.status) &&
+                    selectedEvent.status === "suspendido" && (
+                      <p className="text-red-400 font-semibold text-lg">
+                        ⛔ Evento suspendido
+                      </p>
+                    )}
 
-                  {selectedEvent.status === "finalizado" && (
-                    <p className="text-gray-400 font-semibold text-lg">
-                      ✔ Evento finalizado
-                    </p>
-                  )}
+                  {!isCountdownActive(selectedEvent.status) &&
+                    selectedEvent.status === "pendiente" && (
+                      <p className="text-yellow-300 font-semibold text-lg">
+                        ⏳ Pendiente de validación
+                      </p>
+                    )}
+
+                  {!isCountdownActive(selectedEvent.status) &&
+                    selectedEvent.status === "finalizado" && (
+                      <p className="text-gray-400 font-semibold text-lg">
+                        ✔ Evento finalizado
+                      </p>
+                    )}
                 </div>
               </div>
             )}
 
             <div className="p-6 space-y-4 overflow-y-auto">
-              <p className="text-gray-300">
-                {selectedEvent.description}
-              </p>
+              <p className="text-gray-300">{selectedEvent.description}</p>
 
               {selectedEvent.info && (
                 <div className="bg-gray-800 p-4 rounded-lg">
-                  <h3 className="font-semibold mb-1">
-                    Información adicional
-                  </h3>
-                  <p className="text-gray-300">
-                    {selectedEvent.info}
-                  </p>
+                  <h3 className="font-semibold mb-1">Información adicional</h3>
+                  <p className="text-gray-300">{selectedEvent.info}</p>
                 </div>
               )}
 
