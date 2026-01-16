@@ -26,6 +26,9 @@ const EVENT_STATUS = {
   },
 };
 
+// Solo eventos confirmados tienen countdown
+const isCountdownActive = (status) => status === "confirmado";
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +45,7 @@ export default function Events() {
         .select("*")
         .order("date", { ascending: false });
 
-      if (error) console.error(error.message);
+      if (error) console.error("Error:", error.message);
       else setEvents(data);
 
       setLoading(false);
@@ -57,7 +60,13 @@ export default function Events() {
   useEffect(() => {
     const interval = setInterval(() => {
       const newTimers = {};
+
       events.forEach((event) => {
+        if (!isCountdownActive(event.status)) {
+          newTimers[event.id] = null;
+          return;
+        }
+
         const now = new Date();
         const eventDate = new Date(event.date);
         const diff = eventDate - now;
@@ -73,6 +82,7 @@ export default function Events() {
           newTimers[event.id] = null;
         }
       });
+
       setTimers(newTimers);
     }, 1000);
 
@@ -93,7 +103,7 @@ export default function Events() {
       <Navbar />
 
       {/* =========================
-         GRID DE EVENTOS
+         LISTA DE EVENTOS
       ========================= */}
       <main className="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.length === 0 ? (
@@ -109,15 +119,15 @@ export default function Events() {
               <div
                 key={event.id}
                 onClick={() =>
-                  event.status !== "suspendido" && setSelectedEvent(event)
+                  event.status !== "suspendido" &&
+                  setSelectedEvent(event)
                 }
                 className={`bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col transition
                   ${
                     event.status === "suspendido"
                       ? "opacity-60 cursor-not-allowed"
                       : "cursor-pointer hover:scale-105"
-                  }
-                `}
+                  }`}
               >
                 {event.cover && (
                   <img
@@ -142,14 +152,35 @@ export default function Events() {
                     {new Date(event.date).toLocaleString()}
                   </p>
 
-                  {timer ? (
+                  {/* TEXTO SEGÚN STATUS */}
+                  {event.status === "confirmado" && timer && (
                     <p className="text-yellow-400 font-semibold mb-2">
                       ⏳ {timer.days}d {timer.hours}h {timer.minutes}m{" "}
                       {timer.seconds}s
                     </p>
-                  ) : (
+                  )}
+
+                  {event.status === "confirmado" && !timer && (
                     <p className="text-green-400 font-semibold mb-2">
                       Evento iniciado / pasado
+                    </p>
+                  )}
+
+                  {event.status === "suspendido" && (
+                    <p className="text-red-400 font-semibold mb-2">
+                      ⛔ Evento suspendido
+                    </p>
+                  )}
+
+                  {event.status === "pendiente" && (
+                    <p className="text-yellow-300 font-semibold mb-2">
+                      ⏳ Pendiente de validación
+                    </p>
+                  )}
+
+                  {event.status === "finalizado" && (
+                    <p className="text-gray-400 font-semibold mb-2">
+                      ✔ Evento finalizado
                     </p>
                   )}
 
@@ -206,6 +237,35 @@ export default function Events() {
                     {selectedEvent.name}
                   </h2>
                   <p>{new Date(selectedEvent.date).toLocaleString()}</p>
+
+                  {/* STATUS TEXTO */}
+                  {selectedEvent.status === "confirmado" &&
+                    timers[selectedEvent.id] && (
+                      <p className="text-yellow-400 font-semibold text-lg">
+                        ⏳ {timers[selectedEvent.id].days}d{" "}
+                        {timers[selectedEvent.id].hours}h{" "}
+                        {timers[selectedEvent.id].minutes}m{" "}
+                        {timers[selectedEvent.id].seconds}s
+                      </p>
+                    )}
+
+                  {selectedEvent.status === "suspendido" && (
+                    <p className="text-red-400 font-semibold text-lg">
+                      ⛔ Evento suspendido
+                    </p>
+                  )}
+
+                  {selectedEvent.status === "pendiente" && (
+                    <p className="text-yellow-300 font-semibold text-lg">
+                      ⏳ Pendiente de validación
+                    </p>
+                  )}
+
+                  {selectedEvent.status === "finalizado" && (
+                    <p className="text-gray-400 font-semibold text-lg">
+                      ✔ Evento finalizado
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -220,7 +280,9 @@ export default function Events() {
                   <h3 className="font-semibold mb-1">
                     Información adicional
                   </h3>
-                  <p className="text-gray-300">{selectedEvent.info}</p>
+                  <p className="text-gray-300">
+                    {selectedEvent.info}
+                  </p>
                 </div>
               )}
 
